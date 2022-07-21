@@ -1,12 +1,13 @@
 import "./App.css";
-import NavBar from "./components/NavBar";
-import HomePage from "./containers/HomePage";
+import { Routes, Route } from "react-router-dom";
+import LoginPage from "./containers/LoginPage";
 
 function App() {
   return (
     <div className="App">
-      <NavBar />
-      <HomePage />
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+      </Routes>
     </div>
   );
 }

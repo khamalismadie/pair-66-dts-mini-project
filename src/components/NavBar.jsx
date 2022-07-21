@@ -1,40 +1,70 @@
 import React from "react";
+import {
+  AppBar,
+  Toolbar,
+  CssBaseline,
+  Typography,
+  makeStyles,
+  useTheme,
+  useMediaQuery,
+} from "@material-ui/core";
+import { Link } from "react-router-dom";
+import DrawerComponent from "./Drawer";
 
-import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
+const useStyles = makeStyles((theme) => ({
+  navlinks: {
+    marginLeft: theme.spacing(5),
+    display: "flex",
+  },
+  logo: {
+    flexGrow: "1",
+    cursor: "pointer",
+  },
+  link: {
+    textDecoration: "none",
+    color: "white",
+    fontSize: "20px",
+    marginLeft: theme.spacing(20),
+    "&:hover": {
+      color: "yellow",
+      borderBottom: "1px solid white",
+    },
+  },
+}));
 
-import { useNavigate } from "react-router-dom";
-
-// Import fungsi untuk melakukan Logout
-import { keluarAplikasi } from "../authentication/firebase";
-
-import styles from "./NavBar.module.css";
-
-const NavBar = () => {
-  const navigate = useNavigate();
-
-  // Fungsi ini akan menjadi async await
-  // Karena keluarDariApps bersifat async, dan kita harus menunggu
-  // keluarDariAppsSelesai, baru boleh navigate
-  const buttonLogoutOnClickHandler = async () => {
-    // Kita akan memanggil fungsi keluarDariApps di sini
-    await keluarAplikasi();
-    navigate("/LoginPage");
-  };
+function Navbar() {
+  const classes = useStyles();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
-    <Box className={styles.grow}>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" component="div" className={styles.grow}>
-            Belajar Firebase Authentication
-          </Typography>
-          <Button color="inherit" onClick={buttonLogoutOnClickHandler}>
-            Logout
-          </Button>
-        </Toolbar>
-      </AppBar>
-    </Box>
+    <AppBar position="static">
+      <CssBaseline />
+      <Toolbar>
+        <Typography variant="h4" className={classes.logo}>
+          Navbar
+          
+        </Typography>
+        {isMobile ? (
+          <DrawerComponent />
+        ) : (
+          <div className={classes.navlinks}>
+            <Link to="/" className={classes.link}>
+              Home
+            </Link>
+            <Link to="/about" className={classes.link}>
+              About
+            </Link>
+            <Link to="/contact" className={classes.link}>
+              Contact
+            </Link>
+            <Link to="/faq" className={classes.link}>
+              FAQ
+            </Link>
+          </div>
+        )}
+      </Toolbar>
+    </AppBar>
   );
-};
-
-export default NavBar;
+}
+export default Navbar;
