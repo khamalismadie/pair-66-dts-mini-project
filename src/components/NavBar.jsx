@@ -18,7 +18,7 @@ const NavBar = () => {
   const buttonLogoutOnClickHandler = async () => {
     // Kita akan memanggil fungsi keluarDariApps di sini
     await keluarAplikasi();
-    navigate("/login");
+    navigate("/LoginPage");
   };
 
   return (
